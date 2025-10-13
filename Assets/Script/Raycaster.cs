@@ -28,7 +28,6 @@ public class Raycaster : MonoBehaviour
         {
             if (hit.transform.gameObject.TryGetComponent<IInteractable>(out IInteractable interactableObject))
             {
-                Debug.Log("HIT! " + hit);
                 interactableObject.Interaction();
             }
         }

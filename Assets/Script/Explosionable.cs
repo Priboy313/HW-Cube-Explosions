@@ -44,7 +44,6 @@ public class Explosionable : MonoBehaviour
 
     private void Explosion()
     {
-        Debug.Log("Explosion!");
         if (TryGetSpawnedFragments(out List<Rigidbody> childrenObjects))
         {
             ApplyExplosionForce(childrenObjects);
