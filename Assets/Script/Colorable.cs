@@ -5,11 +5,6 @@ public class Colorable : MonoBehaviour, IColorable
 {
     private void Awake()
     {
-        SetRandomColor();
-    }
-
-    public void SetRandomColor()
-    {
         GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
     }
 }

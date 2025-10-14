@@ -6,12 +6,20 @@ public class Explosionable : MonoBehaviour
 {
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
-    [SerializeField] [Min(0)] private int _fragmentsMin = 2;
-    [SerializeField] [Min(1)] private int _fragmentsMax = 6;
-    [SerializeField] private int _chanceToSpawnFraments = 100;
+    [SerializeField, Min(1)] private int _fragmentsCountMin = 2;
+    [SerializeField, Min(1)] private int _fragmentsCountMax = 6;
+    [SerializeField, Range(0, 100)] private int _chanceToDivide = 100;
     [SerializeField] private GameObject _fragmentPrefab;
 
     private IInteractable _interactable;
+
+    private void OnValidate()
+    {
+        if (_fragmentsCountMax < _fragmentsCountMin)
+        {
+            _fragmentsCountMax = _fragmentsCountMin + 1;
+        }
+    }
 
     private void Awake()
     {
@@ -20,80 +28,45 @@ public class Explosionable : MonoBehaviour
 
     private void OnEnable()
     {
-        _interactable.InteractionEvent += Explosion;
+        _interactable.InteractionEvent += Explode;
     }
 
     private void OnDisable()
     {
-        _interactable.InteractionEvent -= Explosion;
-    }
-
-    private void OnValidate()
-    {
-        if (_fragmentsMax < _fragmentsMin)
-        {
-            _fragmentsMax = _fragmentsMin + 1;
-        }
+        _interactable.InteractionEvent -= Explode;
     }
 
     public void Initialize(Vector3 parentScale, int parentChace, int scaleDivide = 2, int chanceDivide = 2)
     {
         transform.localScale = parentScale / scaleDivide;
-        _chanceToSpawnFraments = parentChace / chanceDivide;
+        _chanceToDivide = parentChace / chanceDivide;
     }
 
-    private void Explosion()
+    private void Explode()
     {
-        if (TryGetSpawnedFragments(out List<Rigidbody> childrenObjects))
+        if (DevUtils.IsChanceSuccess(_chanceToDivide))
         {
-            ApplyExplosionForce(childrenObjects);
+            List<Rigidbody> childrensRb = FragmentSpawner.Spawn(
+                _fragmentPrefab,
+                _fragmentsCountMin,
+                _fragmentsCountMax,
+                transform.position,
+                transform.localScale,
+                _chanceToDivide
+            );
+
+            ApplyExplosionForce(childrensRb);
         }
 
         Destroy(gameObject);
     }
 
-    private void ApplyExplosionForce(List<Rigidbody> childrenObjects)
+    private void ApplyExplosionForce(List<Rigidbody> childrensRb)
     {
-        foreach (Rigidbody rb in childrenObjects)
+        foreach (Rigidbody rb in childrensRb)
         {
             rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
         }
     }
 
-    private bool TryGetSpawnedFragments(out List<Rigidbody> childrenObjects)
-    {
-        childrenObjects = null;
-
-        if (_fragmentPrefab == null)
-        {
-            Debug.LogError("Fragment Prefab not assigned!");
-            return false;
-        }
-
-        if (DevUtils.IsChanceSuccess(_chanceToSpawnFraments))
-        {
-            int count = DevUtils.GetRandomNumber(_fragmentsMin, _fragmentsMax + 1);
-
-            childrenObjects = new();
-            
-            for (int i = 0; i < count; i++)
-            {
-                GameObject newObject = Instantiate(_fragmentPrefab, transform.position, Random.rotation);
-                
-                if (newObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
-                {
-                    childrenObjects.Add(rb);
-                }
-
-                if (newObject.TryGetComponent<Explosionable>(out Explosionable explosionableObject))
-                {
-                    explosionableObject.Initialize(transform.localScale, _chanceToSpawnFraments);
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
 }
