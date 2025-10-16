@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class Raycaster : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private Camera _camera;
+    private Camera _camera;
+
+    public event Action<GameObject> OnObjectClicked;
 
     private void Awake()
     {
@@ -26,10 +29,7 @@ public class Raycaster : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            if (hit.transform.gameObject.TryGetComponent<IInteractable>(out IInteractable interactableObject))
-            {
-                interactableObject.Interaction();
-            }
+            OnObjectClicked?.Invoke(hit.transform.gameObject);
         }
     }
 }

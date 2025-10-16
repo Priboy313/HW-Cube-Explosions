@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class FragmentSpawner
+public class FragmentSpawner : MonoBehaviour
 {
-    public static List<Rigidbody> Spawn(
-        GameObject fragmentPrefab,
+    [SerializeField] private GameObject _fragmentPrefab;
+
+    public List<Rigidbody> Spawn(
         int minCount, 
         int maxCount,
         Vector3 spawnPosition,
@@ -14,7 +15,7 @@ public static class FragmentSpawner
     {
         List<Rigidbody> spawnedFragmentsRb = new();
 
-        if (fragmentPrefab == null)
+        if (_fragmentPrefab == null)
         {
             Debug.LogError("Префаб осколка не установлен!");
             return spawnedFragmentsRb;
@@ -24,7 +25,7 @@ public static class FragmentSpawner
 
         for (int i = 0; i < count; i++)
         {
-            GameObject newObject = Object.Instantiate(fragmentPrefab, spawnPosition, Random.rotation);
+            GameObject newObject = Object.Instantiate(_fragmentPrefab, spawnPosition, Random.rotation);
             
             if (newObject.TryGetComponent<Explosionable>(out Explosionable explosionableObject))
             {

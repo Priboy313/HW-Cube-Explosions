@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 2041952590691874330}
   - component: {fileID: 3034421813139821313}
   - component: {fileID: 8454084478481635501}
-  - component: {fileID: 6066378116054697538}
-  - component: {fileID: 8540189127648612099}
+  - component: {fileID: 7803521410581704363}
   m_Layer: 0
   m_Name: Explosion Cube
   m_TagString: Untagged
@@ -150,22 +149,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionRadius: 4
   _explosionForce: 2
-  _fragmentsMin: 2
-  _fragmentsMax: 6
+  _fragmentsCountMin: 2
+  _fragmentsCountMax: 6
+  _chanceToDivide: 100
   _fragmentPrefab: {fileID: 8432701760881116000}
---- !u!114 &6066378116054697538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8432701760881116000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3f92a0013db8094bb4b3d9d74dad828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8540189127648612099
+--- !u!114 &7803521410581704363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

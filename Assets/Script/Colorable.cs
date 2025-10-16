@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
-public class Colorable : MonoBehaviour, IColorable
+public class Colorable : MonoBehaviour
 {
     private void Awake()
     {
