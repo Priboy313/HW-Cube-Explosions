@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class Raycaster : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
@@ -15,12 +16,12 @@ public class Raycaster : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputReader.ClickLeftMouseButton += CastPerMouse;
+        _inputReader.OnClickClickLeftMouseButton += CastPerMouse;
     }
 
     private void OnDisable()
     {
-        _inputReader.ClickLeftMouseButton -= CastPerMouse;
+        _inputReader.OnClickClickLeftMouseButton -= CastPerMouse;
     }
 
     private void CastPerMouse()
