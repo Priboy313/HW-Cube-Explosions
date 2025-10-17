@@ -7,7 +7,7 @@ public class Explosionable : MonoBehaviour
     [SerializeField, Min(1)] private int _fragmentsCountMax = 6;
     [SerializeField, Range(0, 100)] private int _chanceToDivide = 100;
 
-    public Rigidbody Rb { get; private set; }
+    public Rigidbody Rigidbody { get; private set; }
 
     public int FragmentsCountMin => _fragmentsCountMin;
     public int FragmentsCountMax => _fragmentsCountMax;
@@ -23,7 +23,7 @@ public class Explosionable : MonoBehaviour
 
     private void Awake()
     {
-        Rb = GetComponent<Rigidbody>();
+        Rigidbody = GetComponent<Rigidbody>();
     }
 
     public void Initialize(Vector3 parentScale, int parentChace, int scaleDivide = 2, int chanceDivide = 2)

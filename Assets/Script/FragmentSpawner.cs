@@ -29,7 +29,7 @@ public class FragmentSpawner : MonoBehaviour
 
             newObject.Initialize(parentScale, parentChanceToDivide);
 
-            spawnedFragmentsRb.Add(newObject.Rb);
+            spawnedFragmentsRb.Add(newObject.Rigidbody);
         }
 
         return spawnedFragmentsRb;

@@ -6,11 +6,11 @@ public class Exploder : MonoBehaviour
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
 
-    public void ApplyExplosionForce(Vector3 explosionPosition, List<Rigidbody> childrensRb)
+    public void ApplyExplosionForce(Vector3 explosionPosition, List<Rigidbody> childrensRigidbody)
     {
-        foreach (Rigidbody rb in childrensRb)
+        foreach (Rigidbody rigidbody in childrensRigidbody)
         {
-            rb.AddExplosionForce(_explosionForce, explosionPosition, _explosionRadius);
+            rigidbody.AddExplosionForce(_explosionForce, explosionPosition, _explosionRadius);
         }
     }
 }

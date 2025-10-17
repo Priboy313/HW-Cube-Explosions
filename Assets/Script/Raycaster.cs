@@ -7,7 +7,7 @@ public class Raycaster : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
     private Camera _camera;
 
-    public event Action<GameObject> OnObjectClicked;
+    public event Action<GameObject> ActionObjectClicked;
 
     private void Awake()
     {
@@ -16,21 +16,21 @@ public class Raycaster : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputReader.OnClickClickLeftMouseButton += CastPerMouse;
+        _inputReader.ActionClick += OnClickCastPerMouse;
     }
 
     private void OnDisable()
     {
-        _inputReader.OnClickClickLeftMouseButton -= CastPerMouse;
+        _inputReader.ActionClick -= OnClickCastPerMouse;
     }
 
-    private void CastPerMouse()
+    private void OnClickCastPerMouse()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            OnObjectClicked?.Invoke(hit.transform.gameObject);
+            ActionObjectClicked?.Invoke(hit.transform.gameObject);
         }
     }
 }

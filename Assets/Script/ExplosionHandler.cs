@@ -16,12 +16,12 @@ public class ExplosionHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _raycaster.OnObjectClicked += ClickedObjectObserver;
+        _raycaster.ActionObjectClicked += ClickedObjectObserver;
     }
 
     private void OnDisable()
     {
-        _raycaster.OnObjectClicked -= ClickedObjectObserver;
+        _raycaster.ActionObjectClicked -= ClickedObjectObserver;
     }
 
     private void ClickedObjectObserver(GameObject clickedObject)
