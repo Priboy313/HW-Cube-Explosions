@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Exploder), typeof(FragmentSpawner))]
-public class ExplosionManager : MonoBehaviour
+public class ExplosionHandler : MonoBehaviour
 {
     [SerializeField] private Raycaster _raycaster;
     private FragmentSpawner _fragmentSpawner;

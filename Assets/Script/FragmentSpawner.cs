@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FragmentSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _fragmentPrefab;
+    [SerializeField] private Explosionable _explosionablePrefab;
 
     public List<Rigidbody> Spawn(
         int minCount, 
@@ -15,7 +15,7 @@ public class FragmentSpawner : MonoBehaviour
     {
         List<Rigidbody> spawnedFragmentsRb = new();
 
-        if (_fragmentPrefab == null)
+        if (_explosionablePrefab == null)
         {
             Debug.LogError("Префаб осколка не установлен!");
             return spawnedFragmentsRb;
@@ -25,17 +25,11 @@ public class FragmentSpawner : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            GameObject newObject = Object.Instantiate(_fragmentPrefab, spawnPosition, Random.rotation);
-            
-            if (newObject.TryGetComponent<Explosionable>(out Explosionable explosionableObject))
-            {
-                explosionableObject.Initialize(parentScale, parentChanceToDivide);
-            }
+            Explosionable newObject = Object.Instantiate(_explosionablePrefab, spawnPosition, Random.rotation);
 
-            if (newObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
-            {
-                spawnedFragmentsRb.Add(rb);
-            }
+            newObject.Initialize(parentScale, parentChanceToDivide);
+
+            spawnedFragmentsRb.Add(newObject.Rb);
         }
 
         return spawnedFragmentsRb;
