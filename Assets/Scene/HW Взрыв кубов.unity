@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 643663108}
   - component: {fileID: 643663107}
   m_Layer: 0
-  m_Name: ExplosionManager
+  m_Name: ExplosionHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a8b1cc0f2d89548b4e98283a865c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fragmentPrefab: {fileID: 8432701760881116000, guid: a5327af3ac023a54eb21de9019895bc9, type: 3}
+  _explosionablePrefab: {fileID: 8454084478481635501, guid: a5327af3ac023a54eb21de9019895bc9, type: 3}
 --- !u!114 &643663108
 MonoBehaviour:
   m_ObjectHideFlags: 0
