@@ -16,32 +16,36 @@ public class ExplosionHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _raycaster.ActionObjectClicked += ClickedObjectObserver;
+        _raycaster.ActionObjectClicked += OnObjectClicked;
     }
 
     private void OnDisable()
     {
-        _raycaster.ActionObjectClicked -= ClickedObjectObserver;
+        _raycaster.ActionObjectClicked -= OnObjectClicked;
     }
 
-    private void ClickedObjectObserver(GameObject clickedObject)
+    private void OnObjectClicked(GameObject clickedObject)
     {
         if (clickedObject.TryGetComponent<Explosionable>(out Explosionable explosionable))
         {
-            List<Rigidbody> childrensRb = new();
+            List<Rigidbody> childrensRigidbody = new();
 
             if (DevUtils.IsChanceSuccess(explosionable.ChanceToDivide))
             {
-                 childrensRb = _fragmentSpawner.Spawn(
+                 childrensRigidbody = _fragmentSpawner.Spawn(
                     explosionable.FragmentsCountMin,
                     explosionable.FragmentsCountMax,
                     clickedObject.transform.position,
                     clickedObject.transform.localScale,
                     explosionable.ChanceToDivide
                 );
+                _exploder.ApplyExplosionForceToChilds(clickedObject.transform.position, childrensRigidbody);
             }
-
-            _exploder.ApplyExplosionForce(clickedObject.transform.position, childrensRb);
+            else
+            {
+                _exploder.ApplyExplosionForceAround(explosionable);
+            }
+            
             Destroy(clickedObject);
         }
     }

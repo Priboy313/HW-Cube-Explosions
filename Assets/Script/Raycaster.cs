@@ -5,6 +5,8 @@ using UnityEngine;
 public class Raycaster : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
+    [SerializeField] private LayerMask _ignoredLayer;
+
     private Camera _camera;
 
     public event Action<GameObject> ActionObjectClicked;
@@ -28,7 +30,7 @@ public class Raycaster : MonoBehaviour
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~_ignoredLayer))
         {
             ActionObjectClicked?.Invoke(hit.transform.gameObject);
         }
